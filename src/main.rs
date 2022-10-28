@@ -4,16 +4,17 @@ use aoc::{
     error::{AocError, Result},
     year2020::*,
     year2021::*,
-    Solution,
+    Solution, SolutionId,
 };
 
 const FIRST_YEAR: usize = 2020;
 const YEAR_COUNT: usize = 2;
 
 macro_rules! solution {
-    ($solutions:expr, $year:expr, $day:expr, $sol:ident) => {
-        $solutions[$year - FIRST_YEAR][$day] = Some(Box::<$sol>::default());
-    };
+    ($solutions:expr, $id:expr, $sol:ident) => {{
+        let id = SolutionId::from($id);
+        $solutions[id.year - FIRST_YEAR][id.day] = Some((id, Box::<$sol>::default()));
+    }};
 }
 
 fn run_solution(solution: &mut dyn Solution) -> Result<()> {
@@ -36,26 +37,39 @@ fn run_solution(solution: &mut dyn Solution) -> Result<()> {
     Ok(())
 }
 
-fn main() -> Result<()> {
-    let mut solutions: [[Option<Box<dyn Solution>>; 25]; YEAR_COUNT] = Default::default();
-    solution!(solutions, 2020, 1, Solution2020Day1);
-    solution!(solutions, 2020, 2, Solution2020Day2);
-    solution!(solutions, 2020, 3, Solution2020Day3);
-    solution!(solutions, 2020, 4, Solution2020Day4);
-    solution!(solutions, 2020, 5, Solution2020Day5);
-    solution!(solutions, 2020, 6, Solution2020Day6);
-    solution!(solutions, 2020, 6, Solution2020Day6);
+type YearSolutions = [Option<(SolutionId, Box<dyn Solution>)>; 25];
 
-    solution!(solutions, 2021, 1, Solution2021Day1);
-    solution!(solutions, 2021, 2, Solution2021Day2);
-    solution!(solutions, 2021, 3, Solution2021Day3);
-    solution!(solutions, 2021, 4, Solution2021Day4);
-    solution!(solutions, 2021, 5, Solution2021Day5);
-    solution!(solutions, 2021, 6, Solution2021Day6);
-    solution!(solutions, 2021, 7, Solution2021Day7);
+fn main() -> Result<()> {
+    let mut solutions: [YearSolutions; YEAR_COUNT] = Default::default();
+    solution!(solutions, (2020, 1), Solution2020Day1);
+    solution!(solutions, (2020, 2), Solution2020Day2);
+    solution!(solutions, (2020, 3), Solution2020Day3);
+    solution!(solutions, (2020, 4), Solution2020Day4);
+    solution!(solutions, (2020, 5), Solution2020Day5);
+    solution!(solutions, (2020, 6), Solution2020Day6);
+    solution!(solutions, (2020, 6), Solution2020Day6);
+
+    solution!(solutions, (2021, 1), Solution2021Day1);
+    solution!(solutions, (2021, 2), Solution2021Day2);
+    solution!(solutions, (2021, 3), Solution2021Day3);
+    solution!(solutions, (2021, 4), Solution2021Day4);
+    solution!(solutions, (2021, 5), Solution2021Day5);
+    solution!(solutions, (2021, 6), Solution2021Day6);
+    solution!(solutions, (2021, 7), Solution2021Day7);
 
     let args = std::env::args().collect::<Vec<_>>();
     match args.len() {
+        1 => {
+            for year in solutions {
+                for (id, mut solution) in year.into_iter().flatten() {
+                    println!("\n\n=====================");
+                    println!("Running day {} of {}\n", id.day, id.year);
+
+                    run_solution(solution.as_mut())?;
+                }
+            }
+            Ok(())
+        }
         3 => {
             let year: usize = args[1].parse()?;
             let day: usize = args[2].parse()?;
@@ -63,7 +77,10 @@ fn main() -> Result<()> {
             let solution = &mut solutions[year - FIRST_YEAR][day];
 
             match solution.as_mut() {
-                Some(solution) => run_solution(solution.as_mut()),
+                Some((id, solution)) => {
+                    println!("Running day {} of {}\n", id.day, id.year);
+                    run_solution(solution.as_mut())
+                }
                 None => Err(AocError::User(format!(
                     "AOC solution for year {} day {} has not been solved yet",
                     year, day

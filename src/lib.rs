@@ -21,6 +21,21 @@ pub trait Solution {
     fn part2(&self) -> Result<u64>;
 }
 
+#[derive(Clone, Copy)]
+pub struct SolutionId {
+    pub year: usize,
+    pub day: usize,
+}
+
+impl From<(usize, usize)> for SolutionId {
+    fn from(value: (usize, usize)) -> Self {
+        Self {
+            year: value.0,
+            day: value.1,
+        }
+    }
+}
+
 #[macro_export]
 macro_rules! aoc_test {
     ($solution:ident, $part1:expr, $part2:expr) => {
