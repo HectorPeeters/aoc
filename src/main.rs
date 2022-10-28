@@ -1,3 +1,5 @@
+use std::time::Instant;
+
 use aoc::{
     error::{AocError, Result},
     year2021::*,
@@ -10,6 +12,26 @@ macro_rules! solution {
     ($solutions:expr, $year:expr, $day:expr, $sol:ident) => {
         $solutions[$year - FIRST_YEAR][$day] = Some(Box::<$sol>::default());
     };
+}
+
+fn run_solution(solution: &mut dyn Solution) -> Result<()> {
+    let parse_start = Instant::now();
+    solution.parse()?;
+    let parse_duration = parse_start.elapsed();
+
+    let part1_start = Instant::now();
+    println!("Solution part 1: {}", solution.part1()?);
+    let part1_duration = part1_start.elapsed();
+
+    let part2_start = Instant::now();
+    println!("Solution part 2: {}", solution.part2()?);
+    let part2_duration = part2_start.elapsed();
+
+    println!("\nParsing took\t{parse_duration:?}");
+    println!("Part 1 took\t{part1_duration:?}");
+    println!("part 2 took\t{part2_duration:?}");
+
+    Ok(())
 }
 
 fn main() -> Result<()> {
@@ -31,14 +53,7 @@ fn main() -> Result<()> {
             let solution = &mut solutions[year - FIRST_YEAR][day];
 
             match solution.as_mut() {
-                Some(solution) => {
-                    solution.parse()?;
-
-                    println!("Part 1: {}", solution.part1()?);
-                    println!("Part 2: {}", solution.part2()?);
-
-                    Ok(())
-                }
+                Some(solution) => run_solution(solution.as_mut()),
                 None => Err(AocError::User(format!(
                     "AOC solution for year {} day {} has not been solved yet",
                     year, day
