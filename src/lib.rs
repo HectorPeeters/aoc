@@ -4,6 +4,7 @@
 #![allow(clippy::module_name_repetitions)]
 
 pub mod error;
+pub mod year2020;
 pub mod year2021;
 
 use error::Result;

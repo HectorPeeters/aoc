@@ -2,11 +2,13 @@ use std::time::Instant;
 
 use aoc::{
     error::{AocError, Result},
+    year2020::*,
     year2021::*,
     Solution,
 };
 
-const FIRST_YEAR: usize = 2021;
+const FIRST_YEAR: usize = 2020;
+const YEAR_COUNT: usize = 2;
 
 macro_rules! solution {
     ($solutions:expr, $year:expr, $day:expr, $sol:ident) => {
@@ -35,7 +37,15 @@ fn run_solution(solution: &mut dyn Solution) -> Result<()> {
 }
 
 fn main() -> Result<()> {
-    let mut solutions: [[Option<Box<dyn Solution>>; 25]; 1] = Default::default();
+    let mut solutions: [[Option<Box<dyn Solution>>; 25]; YEAR_COUNT] = Default::default();
+    solution!(solutions, 2020, 1, Solution2020Day1);
+    solution!(solutions, 2020, 2, Solution2020Day2);
+    solution!(solutions, 2020, 3, Solution2020Day3);
+    solution!(solutions, 2020, 4, Solution2020Day4);
+    solution!(solutions, 2020, 5, Solution2020Day5);
+    solution!(solutions, 2020, 6, Solution2020Day6);
+    solution!(solutions, 2020, 6, Solution2020Day6);
+
     solution!(solutions, 2021, 1, Solution2021Day1);
     solution!(solutions, 2021, 2, Solution2021Day2);
     solution!(solutions, 2021, 3, Solution2021Day3);
