@@ -4,11 +4,12 @@ use aoc::{
     error::{AocError, Result},
     year2020::*,
     year2021::*,
+    year2022::*,
     Solution, SolutionId,
 };
 
 const FIRST_YEAR: usize = 2020;
-const YEAR_COUNT: usize = 2;
+const YEAR_COUNT: usize = 3;
 
 macro_rules! solution {
     ($solutions:expr, $id:expr, $sol:ident) => {{
@@ -56,6 +57,8 @@ fn main() -> Result<()> {
     solution!(solutions, (2021, 5), Solution2021Day5);
     solution!(solutions, (2021, 6), Solution2021Day6);
     solution!(solutions, (2021, 7), Solution2021Day7);
+
+    solution!(solutions, (2022, 1), Solution2022Day1);
 
     let args = std::env::args().collect::<Vec<_>>();
     match args.len() {
