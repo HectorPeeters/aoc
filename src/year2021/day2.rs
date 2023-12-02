@@ -1,14 +1,17 @@
+use crate::error::Result;
 use crate::{aoc_test, Solution};
-use crate::{error::Result, read_input_file};
 
-#[derive(Default)]
-pub struct Solution2021Day2 {
-    data: Vec<(String, u32)>,
-}
+pub struct Solution2021Day2;
 
 impl Solution for Solution2021Day2 {
-    fn parse(&mut self) -> Result<()> {
-        self.data = read_input_file("src/year2021/day2.txt")?
+    const YEAR: u32 = 2021;
+    const DAY: u8 = 2;
+
+    type Data = Vec<(String, u32)>;
+    type Output = u32;
+
+    fn parse(input: &str) -> Result<Self::Data> {
+        input
             .lines()
             .map(|x| {
                 let mut parts = x.split(' ');
@@ -17,15 +20,13 @@ impl Solution for Solution2021Day2 {
                     parts.next().unwrap().parse()?,
                 ))
             })
-            .collect::<Result<_>>()?;
-
-        Ok(())
+            .collect()
     }
 
-    fn part1(&self) -> Result<u64> {
+    fn part1(data: &Self::Data) -> Result<Self::Output> {
         let mut pos = [0, 0];
 
-        for (instr, value) in &self.data {
+        for (instr, value) in data {
             match &instr[..] {
                 "forward" => pos[0] += value,
                 "up" => pos[1] -= value,
@@ -34,13 +35,13 @@ impl Solution for Solution2021Day2 {
             }
         }
 
-        Ok(u64::from(pos[0] * pos[1]))
+        Ok(u32::from(pos[0] * pos[1]))
     }
 
-    fn part2(&self) -> Result<u64> {
+    fn part2(data: &Self::Data) -> Result<Self::Output> {
         let mut pos = [0, 0, 0]; // horizontal, depth, aim
 
-        for (instr, value) in &self.data {
+        for (instr, value) in data {
             match &instr[..] {
                 "forward" => {
                     pos[0] += value;
@@ -52,7 +53,7 @@ impl Solution for Solution2021Day2 {
             }
         }
 
-        Ok(u64::from(pos[0] * pos[1]))
+        Ok(u32::from(pos[0] * pos[1]))
     }
 }
 

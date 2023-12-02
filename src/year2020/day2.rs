@@ -1,15 +1,18 @@
-use crate::{aoc_test, error::Result, read_input_file, Solution};
+use crate::{aoc_test, error::Result, Solution};
 
-#[derive(Default)]
-pub struct Solution2020Day2 {
-    data: Vec<(Range, char, String)>,
-}
+pub struct Solution2020Day2;
 
 type Range = (usize, usize);
 
 impl Solution for Solution2020Day2 {
-    fn parse(&mut self) -> Result<()> {
-        self.data = read_input_file("src/year2020/day2.txt")?
+    const YEAR: u32 = 2020;
+    const DAY: u8 = 2;
+
+    type Data = Vec<(Range, char, String)>;
+    type Output = u32;
+
+    fn parse(input: &str) -> Result<Self::Data> {
+        Ok(input
             .lines()
             .map(|line| {
                 let mut parts = line.split(' ');
@@ -23,31 +26,27 @@ impl Solution for Solution2020Day2 {
 
                 Ok(((range_min, range_max), letter, password.to_string()))
             })
-            .collect::<Result<_>>()?;
-
-        Ok(())
+            .collect::<Result<_>>()?)
     }
 
-    fn part1(&self) -> Result<u64> {
-        Ok(self
-            .data
+    fn part1(data: &Self::Data) -> Result<Self::Output> {
+        Ok(data
             .iter()
             .filter(|((min, max), letter, password)| {
                 let count = password.chars().filter(|c| c == letter).count();
                 (min..=max).contains(&&count)
             })
-            .count() as u64)
+            .count() as u32)
     }
 
-    fn part2(&self) -> Result<u64> {
-        Ok(self
-            .data
+    fn part2(data: &Self::Data) -> Result<Self::Output> {
+        Ok(data
             .iter()
             .filter(|((a, b), letter, password)| {
                 (password.chars().nth(*a - 1).unwrap() == *letter)
                     != (password.chars().nth(*b - 1).unwrap() == *letter)
             })
-            .count() as u64)
+            .count() as u32)
     }
 }
 

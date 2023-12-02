@@ -1,13 +1,16 @@
-use crate::{aoc_test, error::Result, read_input_file, Solution};
+use crate::{aoc_test, error::Result, Solution};
 
-#[derive(Default)]
-pub struct Solution2020Day4 {
-    data: Vec<Vec<(String, String)>>,
-}
+pub struct Solution2020Day4;
 
 impl Solution for Solution2020Day4 {
-    fn parse(&mut self) -> Result<()> {
-        self.data = read_input_file("src/year2020/day4.txt")?
+    const YEAR: u32 = 2020;
+    const DAY: u8 = 4;
+
+    type Data = Vec<Vec<(String, String)>>;
+    type Output = u32;
+
+    fn parse(input: &str) -> Result<Self::Data> {
+        Ok(input
             .split("\n\n")
             .filter(|x| !x.is_empty())
             .map(|passport| {
@@ -24,26 +27,23 @@ impl Solution for Solution2020Day4 {
                     })
                     .collect::<Vec<_>>()
             })
-            .collect();
-
-        Ok(())
+            .collect())
     }
 
-    fn part1(&self) -> Result<u64> {
+    fn part1(data: &Self::Data) -> Result<Self::Output> {
         let required = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"];
 
-        Ok(self
-            .data
+        Ok(data
             .iter()
             .filter(|passport| {
                 required
                     .iter()
                     .all(|r| passport.iter().any(|(k, _)| k == r))
             })
-            .count() as u64)
+            .count() as u32)
     }
 
-    fn part2(&self) -> Result<u64> {
+    fn part2(data: &Self::Data) -> Result<Self::Output> {
         let match_range = |x: &str, l: u32, h: u32| -> Result<bool> {
             let value = x.parse::<u32>()?;
             Ok(value >= l && value <= h)
@@ -83,8 +83,7 @@ impl Solution for Solution2020Day4 {
             ),
         ];
 
-        Ok(self
-            .data
+        Ok(data
             .iter()
             .filter(|passport| {
                 validators.iter().all(|(name, callback)| {
@@ -93,7 +92,7 @@ impl Solution for Solution2020Day4 {
                         .any(|(k, v)| k == name && callback(v).unwrap())
                 })
             })
-            .count() as u64)
+            .count() as u32)
     }
 }
 

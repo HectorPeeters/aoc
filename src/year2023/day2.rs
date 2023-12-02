@@ -1,4 +1,4 @@
-use crate::{aoc_test, error::Result, read_input_file, Solution};
+use crate::{aoc_test, error::Result, Solution};
 
 #[derive(Copy, Clone)]
 enum Color {
@@ -18,19 +18,22 @@ impl From<&str> for Color {
     }
 }
 
-struct Game {
+pub struct Game {
     id: u32,
     cubes: Vec<(u32, Color)>,
 }
 
-#[derive(Default)]
-pub struct Solution2023Day2 {
-    games: Vec<Game>,
-}
+pub struct Solution2023Day2 {}
 
 impl Solution for Solution2023Day2 {
-    fn parse(&mut self) -> Result<()> {
-        self.games = read_input_file("src/year2023/day2.txt")?
+    const YEAR: u32 = 2023;
+    const DAY: u8 = 2;
+
+    type Data = Vec<Game>;
+    type Output = u32;
+
+    fn parse(input: &str) -> Result<Self::Data> {
+        input
             .lines()
             .map(|line| {
                 let (game_str, rounds_str) = line.split_once(':').unwrap();
@@ -48,15 +51,13 @@ impl Solution for Solution2023Day2 {
                     cubes: rounds,
                 })
             })
-            .collect::<Result<_>>()?;
-        Ok(())
+            .collect::<Result<_>>()
     }
 
-    fn part1(&self) -> Result<u64> {
+    fn part1(data: &Self::Data) -> Result<Self::Output> {
         const AVAILABLE: [u32; 3] = [12, 13, 14];
 
-        Ok(self
-            .games
+        Ok(data
             .iter()
             .filter(|g| {
                 g.cubes
@@ -64,12 +65,11 @@ impl Solution for Solution2023Day2 {
                     .all(|(count, color)| AVAILABLE[*color as usize] >= *count)
             })
             .map(|g| g.id)
-            .sum::<u32>() as u64)
+            .sum::<u32>())
     }
 
-    fn part2(&self) -> Result<u64> {
-        Ok(self
-            .games
+    fn part2(data: &Self::Data) -> Result<Self::Output> {
+        Ok(data
             .iter()
             .map(|g| {
                 g.cubes
@@ -81,7 +81,7 @@ impl Solution for Solution2023Day2 {
                     .iter()
                     .product::<u32>()
             })
-            .sum::<u32>() as u64)
+            .sum::<u32>())
     }
 }
 

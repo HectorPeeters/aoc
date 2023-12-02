@@ -1,18 +1,21 @@
 use crate::error::Result;
-use crate::{aoc_test, read_input_file, Solution};
+use crate::{aoc_test, Solution};
 use std::cmp::{max, min};
 use std::collections::HashMap;
 
 type Point = (isize, isize);
 
-#[derive(Default)]
-pub struct Solution2021Day5 {
-    data: Vec<(Point, Point)>,
-}
+pub struct Solution2021Day5;
 
 impl Solution for Solution2021Day5 {
-    fn parse(&mut self) -> Result<()> {
-        self.data = read_input_file("src/year2021/day5.txt")?
+    const YEAR: u32 = 2021;
+    const DAY: u8 = 5;
+
+    type Data = Vec<(Point, Point)>;
+    type Output = u32;
+
+    fn parse(input: &str) -> Result<Self::Data> {
+        input
             .lines()
             .map(|line| {
                 let (first, second) = line.split_once(" -> ").unwrap();
@@ -29,16 +32,13 @@ impl Solution for Solution2021Day5 {
 
                 Ok(((start[0], start[1]), (end[0], end[1])))
             })
-            .collect::<Result<_>>()?;
-
-        Ok(())
+            .collect::<Result<_>>()
     }
 
-    fn part1(&self) -> Result<u64> {
+    fn part1(data: &Self::Data) -> Result<Self::Output> {
         let mut map: HashMap<Point, isize> = HashMap::new();
 
-        self.data
-            .iter()
+        data.iter()
             .flat_map(|(start, end)| {
                 let mut line_points: Vec<Point> = vec![];
 
@@ -58,12 +58,11 @@ impl Solution for Solution2021Day5 {
                 *map.entry(p).or_insert(0) += 1;
             });
 
-        Ok(map.iter().filter(|(_, v)| **v > 1).count() as u64)
+        Ok(map.iter().filter(|(_, v)| **v > 1).count() as u32)
     }
 
-    fn part2(&self) -> Result<u64> {
-        let points = self
-            .data
+    fn part2(data: &Self::Data) -> Result<Self::Output> {
+        let points = data
             .iter()
             .flat_map(|(start, end)| {
                 let mut line_points = vec![];
@@ -94,7 +93,7 @@ impl Solution for Solution2021Day5 {
             *map.entry(*p).or_insert(0) += 1;
         }
 
-        Ok(map.iter().filter(|(_, v)| **v > 1).count() as u64)
+        Ok(map.iter().filter(|(_, v)| **v > 1).count() as u32)
     }
 }
 

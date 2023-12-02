@@ -1,17 +1,20 @@
 use std::collections::HashSet;
 
-use crate::{aoc_test, error::Result, read_input_file, Solution};
+use crate::{aoc_test, error::Result, Solution};
 
-#[derive(Default)]
-pub struct Solution2020Day6 {
-    data: Vec<Group>,
-}
+pub struct Solution2020Day6;
 
 type Group = Vec<Vec<char>>;
 
 impl Solution for Solution2020Day6 {
-    fn parse(&mut self) -> Result<()> {
-        self.data = read_input_file("src/year2020/day6.txt")?
+    const YEAR: u32 = 2020;
+    const DAY: u8 = 6;
+
+    type Data = Vec<Group>;
+    type Output = u32;
+
+    fn parse(input: &str) -> Result<Self::Data> {
+        Ok(input
             .split("\n\n")
             .map(|group| {
                 group
@@ -20,15 +23,13 @@ impl Solution for Solution2020Day6 {
                     .map(|x| x.chars().collect())
                     .collect()
             })
-            .collect::<Vec<_>>();
-
-        Ok(())
+            .collect::<Vec<_>>())
     }
 
-    fn part1(&self) -> Result<u64> {
+    fn part1(data: &Self::Data) -> Result<Self::Output> {
         let mut result = 0;
 
-        for group in &self.data {
+        for group in data {
             let mut questions = HashSet::new();
 
             for person in group {
@@ -37,23 +38,23 @@ impl Solution for Solution2020Day6 {
                 }
             }
 
-            result += questions.len() as u64;
+            result += questions.len() as u32;
         }
 
         Ok(result)
     }
 
-    fn part2(&self) -> Result<u64> {
+    fn part2(data: &Self::Data) -> Result<Self::Output> {
         let mut result = 0;
 
-        for group in &self.data {
+        for group in data {
             let mut questions: HashSet<char> = group[0].iter().copied().collect();
 
             for person in &group[1..] {
                 questions.retain(|c| person.contains(c));
             }
 
-            result += questions.len() as u64;
+            result += questions.len() as u32;
         }
 
         Ok(result)

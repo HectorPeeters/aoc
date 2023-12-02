@@ -1,39 +1,38 @@
-use crate::{aoc_test, Solution};
-use crate::{error::Result, read_input_file};
+use crate::{aoc_test, error::Result, Solution};
 
-#[derive(Default)]
-pub struct Solution2021Day7 {
-    data: Vec<i64>,
-}
+pub struct Solution2021Day7;
 
 impl Solution for Solution2021Day7 {
-    fn parse(&mut self) -> Result<()> {
-        self.data = read_input_file("src/year2021/day7.txt")?
+    const YEAR: u32 = 2021;
+    const DAY: u8 = 7;
+
+    type Data = Vec<i32>;
+    type Output = u32;
+
+    fn parse(input: &str) -> Result<Self::Data> {
+        Ok(input
             .lines()
             .flat_map(|x| x.split(',').map(|y| y.parse().unwrap()).collect::<Vec<_>>())
-            .collect::<Vec<_>>();
-
-        Ok(())
+            .collect())
     }
 
-    fn part1(&self) -> Result<u64> {
-        let min = *self.data.iter().min().unwrap();
-        let max = *self.data.iter().max().unwrap();
+    fn part1(data: &Self::Data) -> Result<Self::Output> {
+        let min = *data.iter().min().unwrap();
+        let max = *data.iter().max().unwrap();
 
         Ok((min..=max)
-            .map(|pos| self.data.iter().map(|x| (*x - pos).unsigned_abs()).sum())
+            .map(|pos| data.iter().map(|x| (*x - pos).unsigned_abs()).sum())
             .min()
             .unwrap())
     }
 
-    fn part2(&self) -> Result<u64> {
-        let min = *self.data.iter().min().unwrap();
-        let max = *self.data.iter().max().unwrap();
+    fn part2(data: &Self::Data) -> Result<Self::Output> {
+        let min = *data.iter().min().unwrap();
+        let max = *data.iter().max().unwrap();
 
         Ok((min..=max)
             .map(|pos| {
-                self.data
-                    .iter()
+                data.iter()
                     .map(|x| {
                         let n = (*x - pos).unsigned_abs() + 1;
                         n * (n - 1) / 2

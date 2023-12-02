@@ -1,10 +1,7 @@
 use crate::error::Result;
-use crate::{aoc_test, read_input_file, Solution};
+use crate::{aoc_test, Solution};
 
-#[derive(Default)]
-pub struct Solution2021Day3 {
-    data: Vec<Vec<u8>>,
-}
+pub struct Solution2021Day3;
 
 fn count(input: &[Vec<u8>], value: u8, index: usize) -> usize {
     input
@@ -46,26 +43,30 @@ fn first_common(input: &[Vec<u8>], func: fn(usize, usize) -> bool) -> u32 {
 }
 
 impl Solution for Solution2021Day3 {
-    fn parse(&mut self) -> Result<()> {
-        self.data = read_input_file("src/year2021/day3.txt")?
+    const YEAR: u32 = 2021;
+    const DAY: u8 = 3;
+
+    type Data = Vec<Vec<u8>>;
+    type Output = u32;
+
+    fn parse(input: &str) -> Result<Self::Data> {
+        input
             .lines()
             .map(|x| {
                 x.chars()
                     .map(|x| Ok(x.to_digit(10).expect("Failed to parse int").try_into()?))
                     .collect()
             })
-            .collect::<Result<_>>()?;
-
-        Ok(())
+            .collect()
     }
 
-    fn part1(&self) -> Result<u64> {
-        Ok(cmp!(&self.data, <) * cmp!(&self.data, >))
+    fn part1(data: &Self::Data) -> Result<Self::Output> {
+        Ok(cmp!(data, <) * cmp!(data, >))
     }
 
-    fn part2(&self) -> Result<u64> {
-        Ok(u64::from(
-            first_common(&self.data, |a, b| a >= b) * first_common(&self.data, |a, b| a < b),
+    fn part2(data: &Self::Data) -> Result<Self::Output> {
+        Ok(u32::from(
+            first_common(data, |a, b| a >= b) * first_common(data, |a, b| a < b),
         ))
     }
 }

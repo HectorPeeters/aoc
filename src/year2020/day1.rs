@@ -1,30 +1,33 @@
 use std::cmp::Ordering;
 
-use crate::{aoc_test, error::Result, read_input_file, Solution};
+use crate::{aoc_test, error::Result, Solution};
 
-#[derive(Default)]
-pub struct Solution2020Day1 {
-    data: Vec<u64>,
-}
+pub struct Solution2020Day1;
 
 impl Solution for Solution2020Day1 {
-    fn parse(&mut self) -> Result<()> {
-        self.data = read_input_file("src/year2020/day1.txt")?
+    const YEAR: u32 = 2020;
+    const DAY: u8 = 1;
+
+    type Data = Vec<u32>;
+    type Output = u32;
+
+    fn parse(input: &str) -> Result<Self::Data> {
+        let mut data = input
             .lines()
             .map(|x| Ok(x.parse()?))
-            .collect::<Result<_>>()?;
+            .collect::<Result<Vec<_>>>()?;
 
-        self.data.sort_unstable();
+        data.sort_unstable();
 
-        Ok(())
+        Ok(data)
     }
 
-    fn part1(&self) -> Result<u64> {
+    fn part1(input: &Self::Data) -> Result<Self::Output> {
         let mut low = 0;
-        let mut high = self.data.len() - 1;
+        let mut high = input.len() - 1;
 
         loop {
-            let sum = self.data[low] + self.data[high];
+            let sum = input[low] + input[high];
 
             match sum.cmp(&2020) {
                 Ordering::Equal => break,
@@ -33,24 +36,24 @@ impl Solution for Solution2020Day1 {
             }
         }
 
-        Ok(self.data[low] * self.data[high])
+        Ok(input[low] * input[high])
     }
 
-    fn part2(&self) -> Result<u64> {
-        for value in &self.data {
+    fn part2(input: &Self::Data) -> Result<Self::Output> {
+        for value in input {
             let target = 2020 - value;
             let mut low = 0;
-            let mut high = self.data.len() - 1;
+            let mut high = input.len() - 1;
 
             loop {
                 if low >= high {
                     break;
                 }
 
-                let sum = self.data[low] + self.data[high];
+                let sum = input[low] + input[high];
 
                 match sum.cmp(&target) {
-                    Ordering::Equal => return Ok(value * self.data[low] * self.data[high]),
+                    Ordering::Equal => return Ok(value * input[low] * input[high]),
                     Ordering::Less => low += 1,
                     Ordering::Greater => high -= 1,
                 }

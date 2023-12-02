@@ -13,16 +13,18 @@ pub mod year2023;
 
 use error::Result;
 
-pub fn read_input_file(path: &str) -> Result<String> {
-    Ok(std::fs::read_to_string(path)?)
-}
-
 pub trait Solution {
-    fn parse(&mut self) -> Result<()>;
+    const YEAR: u32;
+    const DAY: u8;
 
-    fn part1(&self) -> Result<u64>;
+    type Data;
+    type Output;
 
-    fn part2(&self) -> Result<u64>;
+    fn parse(input: &str) -> Result<Self::Data>;
+
+    fn part1(input: &Self::Data) -> Result<Self::Output>;
+
+    fn part2(input: &Self::Data) -> Result<Self::Output>;
 }
 
 #[derive(Clone, Copy)]
@@ -47,20 +49,28 @@ macro_rules! aoc_test {
         mod tests {
             use super::*;
 
+            fn load_input() -> Result<String> {
+                Ok(std::fs::read_to_string(format!(
+                    "input/{}/day{}.txt",
+                    $solution::YEAR,
+                    $solution::DAY
+                ))?)
+            }
+
             #[test]
             fn part1() -> Result<()> {
-                let mut solution = $solution::default();
-                solution.parse()?;
-                assert_eq!(solution.part1()?, $part1);
+                let input = load_input()?;
+                let data = $solution::parse(&input)?;
+                assert_eq!($solution::part1(&data)?, $part1);
 
                 Ok(())
             }
 
             #[test]
             fn part2() -> Result<()> {
-                let mut solution = $solution::default();
-                solution.parse()?;
-                assert_eq!(solution.part2()?, $part2);
+                let input = load_input()?;
+                let data = $solution::parse(&input)?;
+                assert_eq!($solution::part2(&data)?, $part2);
 
                 Ok(())
             }

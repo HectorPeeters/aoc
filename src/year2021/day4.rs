@@ -1,13 +1,8 @@
-use crate::error::Result;
-use crate::{aoc_test, read_input_file, Solution};
+use crate::{aoc_test, error::Result, Solution};
 
 type Board = Vec<Vec<u32>>;
 
-#[derive(Default)]
-pub struct Solution2021Day4 {
-    draws: Vec<u32>,
-    boards: Vec<Board>,
-}
+pub struct Solution2021Day4;
 
 fn check_win(board: &[Vec<u32>], draws: &[u32]) -> bool {
     board.iter().any(|x| x.iter().all(|y| draws.contains(y)))
@@ -24,11 +19,16 @@ fn count_score(board: &[Vec<u32>], draws: &[u32]) -> u32 {
 }
 
 impl Solution for Solution2021Day4 {
-    fn parse(&mut self) -> Result<()> {
-        let input = read_input_file("src/year2021/day4.txt")?;
+    const YEAR: u32 = 2021;
+    const DAY: u8 = 4;
+
+    type Data = (Vec<u32>, Vec<Board>);
+    type Output = u32;
+
+    fn parse(input: &str) -> Result<Self::Data> {
         let mut lines = input.lines();
 
-        self.draws = lines
+        let draws = lines
             .next()
             .unwrap()
             .split(',')
@@ -55,33 +55,23 @@ impl Solution for Solution2021Day4 {
             }
         }
 
-        self.boards = boards;
-
-        Ok(())
+        Ok((draws, boards))
     }
 
-    fn part1(&self) -> Result<u64> {
-        for i in 1..=self.draws.len() {
-            if let Some(board) = self
-                .boards
-                .iter()
-                .find(|board| check_win(board, &self.draws[..i]))
-            {
-                return Ok(u64::from(count_score(board, &self.draws[..i])));
+    fn part1((draws, boards): &Self::Data) -> Result<Self::Output> {
+        for i in 1..=draws.len() {
+            if let Some(board) = boards.iter().find(|board| check_win(board, &draws[..i])) {
+                return Ok(u32::from(count_score(board, &draws[..i])));
             }
         }
 
         unreachable!()
     }
 
-    fn part2(&self) -> Result<u64> {
-        for i in (1..self.draws.len()).rev() {
-            if let Some(board) = self
-                .boards
-                .iter()
-                .find(|board| !check_win(board, &self.draws[..i]))
-            {
-                return Ok(u64::from(count_score(board, &self.draws[..=i])));
+    fn part2((draws, boards): &Self::Data) -> Result<Self::Output> {
+        for i in (1..draws.len()).rev() {
+            if let Some(board) = boards.iter().find(|board| !check_win(board, &draws[..i])) {
+                return Ok(u32::from(count_score(board, &draws[..=i])));
             }
         }
 

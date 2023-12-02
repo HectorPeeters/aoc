@@ -1,33 +1,33 @@
-use crate::{aoc_test, error::Result, read_input_file, Solution};
+use crate::{aoc_test, error::Result, Solution};
 
-#[derive(Default)]
-pub struct Solution2020Day3 {
-    data: Vec<Vec<char>>,
-}
+pub struct Solution2020Day3;
 
 impl Solution for Solution2020Day3 {
-    fn parse(&mut self) -> Result<()> {
-        self.data = read_input_file("src/year2020/day3.txt")?
+    const YEAR: u32 = 2020;
+    const DAY: u8 = 3;
+
+    type Data = Vec<Vec<char>>;
+    type Output = u64;
+
+    fn parse(input: &str) -> Result<Self::Data> {
+        Ok(input
             .lines()
             .map(|line| line.chars().collect::<Vec<_>>())
-            .collect();
-
-        Ok(())
+            .collect())
     }
 
-    fn part1(&self) -> Result<u64> {
-        let width = self.data[0].len();
+    fn part1(data: &Self::Data) -> Result<Self::Output> {
+        let width = data[0].len();
 
-        Ok(self
-            .data
+        Ok(data
             .iter()
             .enumerate()
             .filter(|(y, line)| line[(y * 3) % width] == '#')
             .count() as u64)
     }
 
-    fn part2(&self) -> Result<u64> {
-        let width = self.data[0].len();
+    fn part2(data: &Self::Data) -> Result<Self::Output> {
+        let width = data[0].len();
 
         let mut sum = 1;
 
@@ -40,14 +40,14 @@ impl Solution for Solution2020Day3 {
             let mut y = 0;
 
             loop {
-                if self.data[y][x % width] == '#' {
+                if data[y][x % width] == '#' {
                     trees += 1;
                 }
 
                 y += y_offset[i];
                 x += x_offset[i];
 
-                if y >= self.data.len() {
+                if y >= data.len() {
                     break;
                 }
             }

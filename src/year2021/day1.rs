@@ -1,13 +1,10 @@
 use crate::error::Result;
-use crate::{aoc_test, read_input_file, Solution};
+use crate::{aoc_test, Solution};
 use std::cmp::PartialOrd;
 
-#[derive(Default)]
-pub struct Solution2021Day1 {
-    data: Vec<u32>,
-}
+pub struct Solution2021Day1;
 
-fn count_incrementing<I, T>(data: I) -> u64
+fn count_incrementing<I, T>(data: I) -> u32
 where
     T: PartialOrd,
     I: Iterator<Item = T> + Clone,
@@ -15,26 +12,27 @@ where
     data.clone()
         .zip(data.skip(1))
         .filter(|(first, second)| first < second)
-        .count() as u64
+        .count() as u32
 }
 
 impl Solution for Solution2021Day1 {
-    fn parse(&mut self) -> Result<()> {
-        self.data = read_input_file("src/year2021/day1.txt")?
-            .lines()
-            .map(|x| x.parse().expect("Failed to parse number"))
-            .collect();
+    const YEAR: u32 = 2021;
+    const DAY: u8 = 1;
 
-        Ok(())
+    type Data = Vec<u32>;
+    type Output = u32;
+
+    fn parse(input: &str) -> Result<Self::Data> {
+        Ok(input.lines().map(|x| x.parse().unwrap()).collect())
     }
 
-    fn part1(&self) -> Result<u64> {
-        Ok(count_incrementing(self.data.iter()))
+    fn part1(data: &Self::Data) -> Result<Self::Output> {
+        Ok(count_incrementing(data.iter()))
     }
 
-    fn part2(&self) -> Result<u64> {
+    fn part2(data: &Self::Data) -> Result<Self::Output> {
         Ok(count_incrementing(
-            self.data.windows(3).map(|x| x.iter().sum::<u32>()),
+            data.windows(3).map(|x| x.iter().sum::<u32>()),
         ))
     }
 }

@@ -1,17 +1,19 @@
-use crate::{aoc_test, Solution};
-use crate::{error::Result, read_input_file};
+use crate::{aoc_test, error::Result, Solution};
 use itertools::Itertools;
 
-#[derive(Default)]
-pub struct Solution2021Day8 {
-    data: Vec<([Digit; 10], [Digit; 4])>,
-}
+pub struct Solution2021Day8;
 
 type Digit = Vec<char>;
 
 impl Solution for Solution2021Day8 {
-    fn parse(&mut self) -> Result<()> {
-        self.data = read_input_file("src/year2021/day8.txt")?
+    const YEAR: u32 = 2021;
+    const DAY: u8 = 8;
+
+    type Data = Vec<([Digit; 10], [Digit; 4])>;
+    type Output = u32;
+
+    fn parse(input: &str) -> Result<Self::Data> {
+        Ok(input
             .lines()
             .map(|l| {
                 let mut parts = l.split(" | ");
@@ -34,24 +36,21 @@ impl Solution for Solution2021Day8 {
 
                 (signals, codes)
             })
-            .collect();
-
-        Ok(())
+            .collect())
     }
 
-    fn part1(&self) -> Result<u64> {
-        Ok(self
-            .data
+    fn part1(data: &Self::Data) -> Result<Self::Output> {
+        Ok(data
             .iter()
             .map(|(_, code)| {
                 code.iter()
                     .filter(|c| [2, 3, 4, 7].contains(&c.len()))
-                    .count() as u64
+                    .count() as u32
             })
             .sum())
     }
 
-    fn part2(&self) -> Result<u64> {
+    fn part2(data: &Self::Data) -> Result<Self::Output> {
         let segments: [Vec<u8>; 10] = [
             vec![0, 1, 2, 3, 4, 5],    // 0
             vec![1, 2],                // 1
@@ -68,7 +67,7 @@ impl Solution for Solution2021Day8 {
         for perm in [0, 1, 2, 3, 4, 5, 6].iter().permutations(7) {
             let mut incorrect_permutation = false;
 
-            for (signal, _) in &self.data {
+            for (signal, _) in data {
                 if incorrect_permutation {
                     break;
                 }

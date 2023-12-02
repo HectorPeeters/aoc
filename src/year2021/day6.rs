@@ -1,23 +1,24 @@
 use crate::error::Result;
-use crate::{aoc_test, read_input_file, Solution};
+use crate::{aoc_test, Solution};
 
-#[derive(Default)]
-pub struct Solution2021Day6 {
-    data: Vec<usize>,
-}
+pub struct Solution2021Day6;
 
 impl Solution for Solution2021Day6 {
-    fn parse(&mut self) -> Result<()> {
-        self.data = read_input_file("src/year2021/day6.txt")?
+    const YEAR: u32 = 2021;
+    const DAY: u8 = 6;
+
+    type Data = Vec<usize>;
+    type Output = u64;
+
+    fn parse(input: &str) -> Result<Self::Data> {
+        Ok(input
             .lines()
             .flat_map(|x| x.split(',').map(|y| y.parse().unwrap()).collect::<Vec<_>>())
-            .collect::<Vec<_>>();
-
-        Ok(())
+            .collect())
     }
 
-    fn part1(&self) -> Result<u64> {
-        let mut fishes = self.data.clone();
+    fn part1(data: &Self::Data) -> Result<Self::Output> {
+        let mut fishes = data.clone();
 
         for _ in 0..80 {
             let mut new_fishes = vec![];
@@ -35,10 +36,10 @@ impl Solution for Solution2021Day6 {
         Ok(fishes.len() as u64)
     }
 
-    fn part2(&self) -> Result<u64> {
-        let mut fish_counters = vec![0_u64; 9];
+    fn part2(data: &Self::Data) -> Result<Self::Output> {
+        let mut fish_counters = vec![0; 9];
 
-        for fish in &self.data {
+        for fish in data {
             fish_counters[*fish] += 1;
         }
 
@@ -48,7 +49,7 @@ impl Solution for Solution2021Day6 {
             fish_counters[6] += dying;
         }
 
-        Ok(fish_counters.iter().sum::<u64>())
+        Ok(fish_counters.iter().sum())
     }
 }
 
