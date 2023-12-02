@@ -3,6 +3,7 @@ use std::collections::HashSet;
 use crate::{aoc_test, error::Result, Solution};
 
 pub struct Solution2020Day6;
+aoc_test!(Solution2020Day6, 6930, 3585);
 
 type Group = Vec<Vec<char>>;
 
@@ -60,5 +61,3 @@ impl Solution for Solution2020Day6 {
         Ok(result)
     }
 }
-
-aoc_test!(Solution2020Day6, 6930, 3585);

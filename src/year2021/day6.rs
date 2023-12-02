@@ -2,6 +2,7 @@ use crate::error::Result;
 use crate::{aoc_test, Solution};
 
 pub struct Solution2021Day6;
+aoc_test!(Solution2021Day6, 395_627, 1_767_323_539_209);
 
 impl Solution for Solution2021Day6 {
     const YEAR: u32 = 2021;
@@ -52,5 +53,3 @@ impl Solution for Solution2021Day6 {
         Ok(fish_counters.iter().sum())
     }
 }
-
-aoc_test!(Solution2021Day6, 395_627, 1_767_323_539_209);

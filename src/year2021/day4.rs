@@ -3,6 +3,7 @@ use crate::{aoc_test, error::Result, Solution};
 type Board = Vec<Vec<u32>>;
 
 pub struct Solution2021Day4;
+aoc_test!(Solution2021Day4, 11536, 1284);
 
 fn check_win(board: &[Vec<u32>], draws: &[u32]) -> bool {
     board.iter().any(|x| x.iter().all(|y| draws.contains(y)))
@@ -78,5 +79,3 @@ impl Solution for Solution2021Day4 {
         unreachable!()
     }
 }
-
-aoc_test!(Solution2021Day4, 11536, 1284);

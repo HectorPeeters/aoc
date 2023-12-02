@@ -3,6 +3,7 @@ use itertools::Itertools;
 use crate::{aoc_test, error::Result, Solution};
 
 pub struct Solution2022Day1;
+aoc_test!(Solution2022Day1, 74198, 209_914);
 
 impl Solution for Solution2022Day1 {
     const YEAR: u32 = 2022;
@@ -32,5 +33,3 @@ impl Solution for Solution2022Day1 {
             .sum())
     }
 }
-
-aoc_test!(Solution2022Day1, 74198, 209_914);

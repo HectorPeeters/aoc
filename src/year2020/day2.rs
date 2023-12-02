@@ -1,6 +1,7 @@
 use crate::{aoc_test, error::Result, Solution};
 
 pub struct Solution2020Day2;
+aoc_test!(Solution2020Day2, 396, 428);
 
 type Range = (usize, usize);
 
@@ -49,5 +50,3 @@ impl Solution for Solution2020Day2 {
             .count() as u32)
     }
 }
-
-aoc_test!(Solution2020Day2, 396, 428);

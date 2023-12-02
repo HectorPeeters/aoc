@@ -23,7 +23,8 @@ pub struct Game {
     cubes: Vec<(u32, Color)>,
 }
 
-pub struct Solution2023Day2 {}
+pub struct Solution2023Day2;
+aoc_test!(Solution2023Day2, 2268, 63542);
 
 impl Solution for Solution2023Day2 {
     const YEAR: u32 = 2023;
@@ -84,5 +85,3 @@ impl Solution for Solution2023Day2 {
             .sum::<u32>())
     }
 }
-
-aoc_test!(Solution2023Day2, 2268, 63542);

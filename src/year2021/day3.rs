@@ -2,6 +2,7 @@ use crate::error::Result;
 use crate::{aoc_test, Solution};
 
 pub struct Solution2021Day3;
+aoc_test!(Solution2021Day3, 2_035_764, 2_817_661);
 
 fn count(input: &[Vec<u8>], value: u8, index: usize) -> usize {
     input
@@ -70,5 +71,3 @@ impl Solution for Solution2021Day3 {
         ))
     }
 }
-
-aoc_test!(Solution2021Day3, 2_035_764, 2_817_661);

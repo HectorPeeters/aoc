@@ -6,6 +6,7 @@ use std::collections::HashMap;
 type Point = (isize, isize);
 
 pub struct Solution2021Day5;
+aoc_test!(Solution2021Day5, 7468, 22364);
 
 impl Solution for Solution2021Day5 {
     const YEAR: u32 = 2021;
@@ -96,5 +97,3 @@ impl Solution for Solution2021Day5 {
         Ok(map.iter().filter(|(_, v)| **v > 1).count() as u32)
     }
 }
-
-aoc_test!(Solution2021Day5, 7468, 22364);

@@ -2,6 +2,7 @@ use crate::error::Result;
 use crate::{aoc_test, Solution};
 
 pub struct Solution2021Day2;
+aoc_test!(Solution2021Day2, 1_604_850, 1_685_186_100);
 
 impl Solution for Solution2021Day2 {
     const YEAR: u32 = 2021;
@@ -56,5 +57,3 @@ impl Solution for Solution2021Day2 {
         Ok(u32::from(pos[0] * pos[1]))
     }
 }
-
-aoc_test!(Solution2021Day2, 1_604_850, 1_685_186_100);

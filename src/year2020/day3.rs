@@ -1,6 +1,7 @@
 use crate::{aoc_test, error::Result, Solution};
 
 pub struct Solution2020Day3;
+aoc_test!(Solution2020Day3, 176, 5_872_458_240);
 
 impl Solution for Solution2020Day3 {
     const YEAR: u32 = 2020;
@@ -58,5 +59,3 @@ impl Solution for Solution2020Day3 {
         Ok(sum)
     }
 }
-
-aoc_test!(Solution2020Day3, 176, 5_872_458_240);

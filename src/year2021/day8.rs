@@ -2,6 +2,7 @@ use crate::{aoc_test, error::Result, Solution};
 use itertools::Itertools;
 
 pub struct Solution2021Day8;
+aoc_test!(Solution2021Day8, 369, 0);
 
 type Digit = Vec<char>;
 
@@ -102,5 +103,3 @@ impl Solution for Solution2021Day8 {
         Ok(0)
     }
 }
-
-aoc_test!(Solution2021Day8, 369, 0);

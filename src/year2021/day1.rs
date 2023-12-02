@@ -3,6 +3,7 @@ use crate::{aoc_test, Solution};
 use std::cmp::PartialOrd;
 
 pub struct Solution2021Day1;
+aoc_test!(Solution2021Day1, 1185, 1158);
 
 fn count_incrementing<I, T>(data: I) -> u32
 where
@@ -36,5 +37,3 @@ impl Solution for Solution2021Day1 {
         ))
     }
 }
-
-aoc_test!(Solution2021Day1, 1185, 1158);

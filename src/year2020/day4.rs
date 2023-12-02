@@ -1,6 +1,7 @@
 use crate::{aoc_test, error::Result, Solution};
 
 pub struct Solution2020Day4;
+aoc_test!(Solution2020Day4, 208, 167);
 
 impl Solution for Solution2020Day4 {
     const YEAR: u32 = 2020;
@@ -95,5 +96,3 @@ impl Solution for Solution2020Day4 {
             .count() as u32)
     }
 }
-
-aoc_test!(Solution2020Day4, 208, 167);

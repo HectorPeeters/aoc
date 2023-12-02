@@ -3,6 +3,7 @@ use std::cmp::Ordering;
 use crate::{aoc_test, error::Result, Solution};
 
 pub struct Solution2020Day1;
+aoc_test!(Solution2020Day1, 964_875, 158_661_360);
 
 impl Solution for Solution2020Day1 {
     const YEAR: u32 = 2020;
@@ -63,5 +64,3 @@ impl Solution for Solution2020Day1 {
         unreachable!()
     }
 }
-
-aoc_test!(Solution2020Day1, 964_875, 158_661_360);

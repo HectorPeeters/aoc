@@ -1,6 +1,7 @@
 use crate::{aoc_test, error::Result, Solution};
 
 pub struct Solution2020Day5;
+aoc_test!(Solution2020Day5, 938, 696);
 
 impl Solution for Solution2020Day5 {
     const YEAR: u32 = 2020;
@@ -75,5 +76,3 @@ impl Solution for Solution2020Day5 {
         unreachable!()
     }
 }
-
-aoc_test!(Solution2020Day5, 938, 696);
