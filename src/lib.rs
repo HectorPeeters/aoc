@@ -13,6 +13,21 @@ pub mod year2023;
 
 use error::Result;
 
+fn measure<T>(f: impl Fn() -> Result<T>) -> Result<(T, std::time::Duration)> {
+    let result = f()?;
+
+    let mut duration = std::time::Duration::new(0, 0);
+
+    const N: u32 = 20;
+    for _ in 0..N {
+        let start = std::time::Instant::now();
+        f()?;
+        duration += start.elapsed();
+    }
+
+    Ok((result, duration / N))
+}
+
 pub trait Solution {
     const YEAR: u32;
     const DAY: u8;
@@ -29,11 +44,18 @@ pub trait Solution {
     fn run() -> Result<()> {
         let input = std::fs::read_to_string(format!("input/{}/day{}.txt", Self::YEAR, Self::DAY))?;
 
-        let data = Self::parse(&input)?;
+        let (data, duration) = measure(|| Self::parse(&input))?;
 
         println!("Running solution for {} day {}", Self::YEAR, Self::DAY);
-        println!("Part 1: {}", Self::part1(&data)?);
-        println!("Part 2: {}", Self::part2(&data)?);
+        let (part1, part1_duration) = measure(|| Self::part1(&data))?;
+        println!("Part 1: {}", part1);
+        let (part2, part2_duration) = measure(|| Self::part2(&data))?;
+        println!("Part 2: {}", part2);
+
+        println!("\nBenchmark:");
+        println!("Parse: {:?}", duration);
+        println!("Part 1: {:?}", part1_duration);
+        println!("Part 2: {:?}", part2_duration);
 
         Ok(())
     }
