@@ -58,6 +58,7 @@ fn main() -> Result<()> {
     solution!(solutions, (2021, 5), Solution2021Day5);
     solution!(solutions, (2021, 6), Solution2021Day6);
     solution!(solutions, (2021, 7), Solution2021Day7);
+    solution!(solutions, (2021, 8), Solution2021Day8);
 
     solution!(solutions, (2022, 1), Solution2022Day1);
 
