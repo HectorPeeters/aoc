@@ -29,6 +29,16 @@ fn run_solution(year: u32, day: u8) -> Result<()> {
 }
 
 fn main() -> Result<()> {
-    run_solution(2023, 1)?;
+    let args = std::env::args().collect::<Vec<_>>();
+    if args.len() != 3 {
+        println!("Usage: aoc <year> <day>");
+        return Ok(());
+    }
+
+    let year = args[1].parse::<u32>()?;
+    let day = args[2].parse::<u8>()?;
+
+    run_solution(year, day)?;
+
     Ok(())
 }
