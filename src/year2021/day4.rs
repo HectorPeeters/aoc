@@ -62,10 +62,12 @@ impl Solution for Solution2021Day4 {
 
     fn part1(&self) -> Result<u64> {
         for i in 1..=self.draws.len() {
-            for board in &self.boards {
-                if check_win(board, &self.draws[..i]) {
-                    return Ok(u64::from(count_score(board, &self.draws[..i])));
-                }
+            if let Some(board) = self
+                .boards
+                .iter()
+                .find(|board| check_win(board, &self.draws[..i]))
+            {
+                return Ok(u64::from(count_score(board, &self.draws[..i])));
             }
         }
 
@@ -74,10 +76,12 @@ impl Solution for Solution2021Day4 {
 
     fn part2(&self) -> Result<u64> {
         for i in (1..self.draws.len()).rev() {
-            for board in &self.boards {
-                if !check_win(board, &self.draws[..i]) {
-                    return Ok(u64::from(count_score(board, &self.draws[..=i])));
-                }
+            if let Some(board) = self
+                .boards
+                .iter()
+                .find(|board| !check_win(board, &self.draws[..i]))
+            {
+                return Ok(u64::from(count_score(board, &self.draws[..=i])));
             }
         }
 

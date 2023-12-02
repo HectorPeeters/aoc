@@ -11,13 +11,13 @@ impl Solution for Solution2021Day2 {
         self.data = read_input_file("src/year2021/day2.txt")?
             .lines()
             .map(|x| {
-                let collected = x.split(' ').collect::<Vec<_>>();
-                (
-                    collected[0].to_string(),
-                    collected[1].parse().expect("Failed to parse int"),
-                )
+                let mut parts = x.split(' ');
+                Ok((
+                    parts.next().unwrap().to_owned(),
+                    parts.next().unwrap().parse()?,
+                ))
             })
-            .collect();
+            .collect::<Result<_>>()?;
 
         Ok(())
     }

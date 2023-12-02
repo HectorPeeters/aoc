@@ -15,14 +15,14 @@ impl Solution for Solution2021Day5 {
         self.data = read_input_file("src/year2021/day5.txt")?
             .lines()
             .map(|line| {
-                let coords = line.split(" -> ").collect::<Vec<_>>();
+                let (first, second) = line.split_once(" -> ").unwrap();
 
-                let start: Vec<_> = coords[0]
+                let start: Vec<_> = first
                     .split(',')
                     .map(|x| Ok(x.parse::<isize>()?))
                     .collect::<Result<_>>()?;
 
-                let end: Vec<_> = coords[1]
+                let end: Vec<_> = second
                     .split(',')
                     .map(|x| Ok(x.parse()?))
                     .collect::<Result<_>>()?;

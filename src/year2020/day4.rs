@@ -12,7 +12,7 @@ impl Solution for Solution2020Day4 {
             .filter(|x| !x.is_empty())
             .map(|passport| {
                 passport
-                    .split(&[' ', '\n'])
+                    .split([' ', '\n'])
                     .filter(|x| !x.is_empty())
                     .map(|e| {
                         let mut parts = e.split(':');

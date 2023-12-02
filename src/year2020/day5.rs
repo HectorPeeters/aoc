@@ -10,7 +10,7 @@ impl Solution for Solution2020Day5 {
         self.data = read_input_file("src/year2020/day5.txt")?
             .lines()
             .map(ToOwned::to_owned)
-            .collect::<Vec<_>>();
+            .collect();
 
         Ok(())
     }

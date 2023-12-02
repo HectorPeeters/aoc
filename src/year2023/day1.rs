@@ -9,7 +9,7 @@ impl Solution for Solution2023Day1 {
     fn parse(&mut self) -> Result<()> {
         self.lines = read_input_file("src/year2023/day1.txt")?
             .lines()
-            .map(|x| x.to_string())
+            .map(ToString::to_string)
             .collect();
         Ok(())
     }

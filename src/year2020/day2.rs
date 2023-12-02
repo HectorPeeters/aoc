@@ -34,7 +34,7 @@ impl Solution for Solution2020Day2 {
             .iter()
             .filter(|((min, max), letter, password)| {
                 let count = password.chars().filter(|c| c == letter).count();
-                count >= *min && count <= *max
+                (min..=max).contains(&&count)
             })
             .count() as u64)
     }
