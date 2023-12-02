@@ -18,13 +18,25 @@ pub trait Solution {
     const DAY: u8;
 
     type Data;
-    type Output;
+    type Output: std::fmt::Display;
 
     fn parse(input: &str) -> Result<Self::Data>;
 
     fn part1(input: &Self::Data) -> Result<Self::Output>;
 
     fn part2(input: &Self::Data) -> Result<Self::Output>;
+
+    fn run() -> Result<()> {
+        let input = std::fs::read_to_string(format!("input/{}/day{}.txt", Self::YEAR, Self::DAY))?;
+
+        let data = Self::parse(&input)?;
+
+        println!("Running solution for {} day {}", Self::YEAR, Self::DAY);
+        println!("Part 1: {}", Self::part1(&data)?);
+        println!("Part 2: {}", Self::part2(&data)?);
+
+        Ok(())
+    }
 }
 
 #[macro_export]
