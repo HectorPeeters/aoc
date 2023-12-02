@@ -59,4 +59,4 @@ impl Solution for Solution2020Day3 {
     }
 }
 
-aoc_test!(Solution2020Day3, 176, 5872458240);
+aoc_test!(Solution2020Day3, 176, 5_872_458_240);

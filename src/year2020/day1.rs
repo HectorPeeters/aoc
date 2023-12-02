@@ -61,4 +61,4 @@ impl Solution for Solution2020Day1 {
     }
 }
 
-aoc_test!(Solution2020Day1, 964875, 158661360);
+aoc_test!(Solution2020Day1, 964_875, 158_661_360);
