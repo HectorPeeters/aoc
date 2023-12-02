@@ -2,6 +2,8 @@
 #![deny(clippy::pedantic)]
 #![allow(clippy::missing_errors_doc)]
 #![allow(clippy::module_name_repetitions)]
+#![allow(clippy::cast_lossless)]
+#![allow(clippy::cast_possible_truncation)]
 
 pub mod error;
 pub mod year2020;

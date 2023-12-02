@@ -62,6 +62,7 @@ fn main() -> Result<()> {
     solution!(solutions, (2022, 1), Solution2022Day1);
 
     solution!(solutions, (2023, 1), Solution2023Day1);
+    solution!(solutions, (2023, 2), Solution2023Day2);
 
     let args = std::env::args().collect::<Vec<_>>();
     match args.len() {
