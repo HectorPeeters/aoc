@@ -14,11 +14,11 @@ pub mod year2023;
 use error::Result;
 
 fn measure<T>(f: impl Fn() -> Result<T>) -> Result<(T, std::time::Duration)> {
+    const N: u32 = 20;
+
     let result = f()?;
 
     let mut duration = std::time::Duration::new(0, 0);
-
-    const N: u32 = 20;
     for _ in 0..N {
         let start = std::time::Instant::now();
         f()?;
@@ -48,14 +48,14 @@ pub trait Solution {
 
         println!("Running solution for {} day {}", Self::YEAR, Self::DAY);
         let (part1, part1_duration) = measure(|| Self::part1(&data))?;
-        println!("Part 1: {}", part1);
+        println!("Part 1: {part1}");
         let (part2, part2_duration) = measure(|| Self::part2(&data))?;
-        println!("Part 2: {}", part2);
+        println!("Part 2: {part2}");
 
         println!("\nBenchmark:");
-        println!("Parse: {:?}", duration);
-        println!("Part 1: {:?}", part1_duration);
-        println!("Part 2: {:?}", part2_duration);
+        println!("Parse: {duration:?}");
+        println!("Part 1: {part1_duration:?}");
+        println!("Part 2: {part2_duration:?}");
 
         Ok(())
     }

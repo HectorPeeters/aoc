@@ -66,8 +66,6 @@ impl Solution for Solution2021Day3 {
     }
 
     fn part2(data: &Self::Data) -> Result<Self::Output> {
-        Ok(u32::from(
-            first_common(data, |a, b| a >= b) * first_common(data, |a, b| a < b),
-        ))
+        Ok(first_common(data, |a, b| a >= b) * first_common(data, |a, b| a < b))
     }
 }

@@ -13,7 +13,7 @@ impl Solution for Solution2020Day2 {
     type Output = u32;
 
     fn parse(input: &str) -> Result<Self::Data> {
-        Ok(input
+        input
             .lines()
             .map(|line| {
                 let mut parts = line.split(' ');
@@ -27,7 +27,7 @@ impl Solution for Solution2020Day2 {
 
                 Ok(((range_min, range_max), letter, password.to_string()))
             })
-            .collect::<Result<_>>()?)
+            .collect::<Result<_>>()
     }
 
     fn part1(data: &Self::Data) -> Result<Self::Output> {

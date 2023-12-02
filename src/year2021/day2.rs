@@ -36,7 +36,7 @@ impl Solution for Solution2021Day2 {
             }
         }
 
-        Ok(u32::from(pos[0] * pos[1]))
+        Ok(pos[0] * pos[1])
     }
 
     fn part2(data: &Self::Data) -> Result<Self::Output> {
@@ -54,6 +54,6 @@ impl Solution for Solution2021Day2 {
             }
         }
 
-        Ok(u32::from(pos[0] * pos[1]))
+        Ok(pos[0] * pos[1])
     }
 }
