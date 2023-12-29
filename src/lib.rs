@@ -68,7 +68,7 @@ macro_rules! aoc_test {
         mod tests {
             use super::*;
 
-            fn load_input() -> Result<String> {
+            fn load_input() -> $crate::error::Result<String> {
                 Ok(std::fs::read_to_string(format!(
                     "input/{}/day{}.txt",
                     $solution::YEAR,
@@ -77,7 +77,7 @@ macro_rules! aoc_test {
             }
 
             #[test]
-            fn part1() -> Result<()> {
+            fn part1() -> $crate::error::Result<()> {
                 let input = load_input()?;
                 let data = $solution::parse(&input)?;
                 assert_eq!($solution::part1(&data)?, $part1);
@@ -86,7 +86,7 @@ macro_rules! aoc_test {
             }
 
             #[test]
-            fn part2() -> Result<()> {
+            fn part2() -> $crate::error::Result<()> {
                 let input = load_input()?;
                 let data = $solution::parse(&input)?;
                 assert_eq!($solution::part2(&data)?, $part2);
