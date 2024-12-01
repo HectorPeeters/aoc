@@ -1,6 +1,6 @@
 use itertools::Itertools;
 
-use crate::{aoc_test, Solution};
+use crate::{aoc_test, error::Result, Solution};
 
 pub struct Solution2024Day1;
 aoc_test!(Solution2024Day1, 2_580_760, 25_358_365);
@@ -12,7 +12,7 @@ impl Solution for Solution2024Day1 {
     type Data = (Vec<u32>, Vec<u32>);
     type Output = u32;
 
-    fn parse(input: &str) -> crate::error::Result<Self::Data> {
+    fn parse(input: &str) -> Result<Self::Data> {
         let (left, right): (Vec<_>, Vec<_>) = input
             .split_whitespace()
             .map(|i| i.parse().unwrap())
@@ -25,7 +25,7 @@ impl Solution for Solution2024Day1 {
         ))
     }
 
-    fn part1(input: &Self::Data) -> crate::error::Result<Self::Output> {
+    fn part1(input: &Self::Data) -> Result<Self::Output> {
         let (mut left, mut right) = input.clone();
         debug_assert_eq!(left.len(), right.len());
 
@@ -39,7 +39,7 @@ impl Solution for Solution2024Day1 {
             .sum())
     }
 
-    fn part2(input: &Self::Data) -> crate::error::Result<Self::Output> {
+    fn part2(input: &Self::Data) -> Result<Self::Output> {
         let (left, right) = input;
         debug_assert_eq!(left.len(), right.len());
 
