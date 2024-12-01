@@ -4,6 +4,7 @@ use aoc::year2020::*;
 use aoc::year2021::*;
 use aoc::year2022::*;
 use aoc::year2023::*;
+use aoc::year2024::*;
 
 fn run_solution(year: u32, day: u8) -> Result<()> {
     match (year, day) {
@@ -24,6 +25,7 @@ fn run_solution(year: u32, day: u8) -> Result<()> {
         (2022, 1) => Solution2022Day1::run(),
         (2023, 1) => Solution2023Day1::run(),
         (2023, 2) => Solution2023Day2::run(),
+        (2024, 1) => Solution2024Day1::run(),
         _ => panic!("Unknown year/day combination"),
     }
 }
