@@ -26,6 +26,7 @@ fn run_solution(year: u32, day: u8) -> Result<()> {
         (2023, 1) => Solution2023Day1::run(),
         (2023, 2) => Solution2023Day2::run(),
         (2024, 1) => Solution2024Day1::run(),
+        (2024, 2) => Solution2024Day2::run(),
         _ => panic!("Unknown year/day combination"),
     }
 }

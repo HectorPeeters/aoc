@@ -15,7 +15,7 @@ pub mod year2024;
 use error::Result;
 
 fn measure<T>(f: impl Fn() -> Result<T>) -> Result<(T, std::time::Duration)> {
-    const N: u32 = 1;
+    const N: u32 = 2000;
 
     let result = f()?;
 
