@@ -4,6 +4,8 @@
 #![allow(clippy::module_name_repetitions)]
 #![allow(clippy::cast_lossless)]
 #![allow(clippy::cast_possible_truncation)]
+#![allow(clippy::cast_possible_wrap)]
+#![allow(clippy::cast_sign_loss)]
 
 pub mod error;
 pub mod year2020;
@@ -15,7 +17,7 @@ pub mod year2024;
 use error::Result;
 
 fn measure<T>(f: impl Fn() -> Result<T>) -> Result<(T, std::time::Duration)> {
-    const N: u32 = 200;
+    const N: u32 = 1;
 
     let result = f()?;
 
