@@ -9,7 +9,7 @@ use itertools::Itertools;
 use crate::{aoc_test, error::Result, Solution};
 
 pub struct Solution2024Day8;
-aoc_test!(Solution2024Day8, 0, 0);
+aoc_test!(Solution2024Day8, 336, 1131);
 
 #[derive(Debug, Clone, Copy, From, Into, Add, Sub, Mul, PartialEq, Eq, Hash)]
 struct Pos(i32, i32);
@@ -69,13 +69,15 @@ impl Solution for Solution2024Day8 {
     }
 
     fn part2(input: &Self::Data) -> Result<Self::Output> {
+        let max_iter = input.width.max(input.height) as i32;
+
         let mut set = HashSet::<Pos>::new();
         for antennas in input.antennas.values() {
             for (a, b) in antennas.iter().tuple_combinations() {
                 #[allow(clippy::maybe_infinite_iter)]
-                (0..)
+                (0..max_iter)
                     .flat_map(|i| [*b + (*b - *a) * i, *a + (*a - *b) * i])
-                    .take_while(|pos| {
+                    .filter(|pos| {
                         pos.0 >= 0
                             && pos.0 < input.width as i32
                             && pos.1 >= 0
