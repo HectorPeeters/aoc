@@ -58,10 +58,8 @@ impl Solution for Solution2024Day8 {
                     .tuple_combinations()
                     .flat_map(|(a, b)| [*b + (*b - *a), *a + (*a - *b)])
                     .filter(|pos| {
-                        pos.0 >= 0
-                            && pos.0 < input.width as i32
-                            && pos.1 >= 0
-                            && pos.1 < input.height as i32
+                        (0..input.width as i32).contains(&pos.0)
+                            && (0..input.height as i32).contains(&pos.1)
                     })
             })
             .collect::<HashSet<_>>()
@@ -78,10 +76,8 @@ impl Solution for Solution2024Day8 {
                 (0..max_iter)
                     .flat_map(|i| [*b + (*b - *a) * i, *a + (*a - *b) * i])
                     .filter(|pos| {
-                        pos.0 >= 0
-                            && pos.0 < input.width as i32
-                            && pos.1 >= 0
-                            && pos.1 < input.height as i32
+                        (0..input.width as i32).contains(&pos.0)
+                            && (0..input.height as i32).contains(&pos.1)
                     })
                     .for_each(|pos| {
                         set.insert(pos);
