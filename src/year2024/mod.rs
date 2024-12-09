@@ -6,6 +6,7 @@ pub mod day5;
 pub mod day6;
 pub mod day7;
 pub mod day8;
+pub mod day9;
 
 pub use day1::*;
 pub use day2::*;
@@ -15,3 +16,4 @@ pub use day5::*;
 pub use day6::*;
 pub use day7::*;
 pub use day8::*;
+pub use day9::*;
